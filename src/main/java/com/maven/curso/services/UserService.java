@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.maven.curso.entities.User;
 import com.maven.curso.repositories.UserRepository;
+import com.maven.curso.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);		
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	//Salvar um usuário no banco de dados retornando o usuário salvo
